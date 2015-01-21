@@ -1,28 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <map>
-#include <stack>
-using namespace std;
-
-//Merge two sorted linked lists and return it as a new list.
-//The new list should be made by splicing together the nodes of the first two lists.
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
-
-struct ListNode {
-   int val;
-   ListNode *next;
-   ListNode(int x) : val(x), next(NULL) {}
-};
-
-class Solution {
-public:
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
     if(l1 == nullptr && l2 == nullptr){
         return NULL;
@@ -50,15 +25,24 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         runner->next = p1;
     } else if (p2 != nullptr){
         runner->next = p2;
-    } else {
     }
     return head.next;
-};
-
-int main()
-{
-    Solution s;
-    return 0;
 }
 
 
+ListNode* mergeKLists(vector<ListNode *> &lists) {
+    ListNode* p;
+    ListNode* p1;
+    ListNode* p2;
+    while(lists.size() > 1){
+        p1 = lists.back();
+        lists.pop_back();
+        p2 = lists.back();
+        lists.pop_back();
+        p = mergeTwoLists(p1, p2);
+        //push_back have performace issue.
+        //maybe using 
+        lists.insert(lists.begin(), p);
+    }
+    return lists.size() == 1? lists[0]: nullptr;
+}

@@ -28,3 +28,45 @@ vector<vector<int> > permute(vector<int> &num) {
     permuteRec(num,0,visited, sol_on_build, coll);
     return coll;
 }
+
+
+//another way to think this problem is 
+//swap head with rest of the array
+// then reduce the problem to [head+1, end]
+//   solve the problem by change the status of array and accept it at end of tree.
+//   instead of reduce the problem by append a bit to result and [head + 1, end]
+// standart bt, change status back
+
+void permuteBT(vector<int>& num, int start, int end, vector<vector<int> >& coll){
+    int i;
+    if(start==end){
+        coll.push_back(num);
+    } else {
+        for(i = start; i <= end; i++){
+            //swap start i
+            int tmp;
+            tmp = num[start];
+            num[start] = num[i];
+            num[i] = tmp;
+            permuteBT(num, start+1, end, coll);
+            //swap i start;
+            tmp = num[start];
+            num[start] = num[i];
+            num[i] = tmp;
+        }
+    }
+}
+
+vector<vector<int> > permute2(vector<int> &num) {
+    vector<vector<int> > coll;
+    if (num.size() == 0) return coll;
+    permuteBT(num, 0, num.size() - 1, coll);
+}
+
+
+//what if the input is n and k, to give all the permute from 1..n
+//i[n...0)
+// push
+// permuteRec(i-1, k-1,...)
+// pop
+

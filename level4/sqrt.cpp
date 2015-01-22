@@ -20,6 +20,5 @@ int sqrt(int x) {
 	return (start + end)/2;; 
 }
 
-int sqrt_newton(int x) {
-	
-}
+//newtown
+//y= (guess + x/guess)/2

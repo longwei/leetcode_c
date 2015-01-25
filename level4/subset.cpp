@@ -59,7 +59,7 @@ vector<vector<int> > subsets(vector<int> &S) {
  	sort(S.begin(), S.end());
  	int elem_size = S.size();
  	int subset_sum = pow(2, elem_size);
- 	vector<vector<int>> subset (subset_sum, vector<int>);
+ 	vector<vector<int>> subset (subset_sum, vector<int>());
  	for(int i = 0; i < elem_size; i++){
  		for(int j=0; j < subset_sum; j++){
  			subset[j].push_back(S[i]);
@@ -68,10 +68,26 @@ vector<vector<int> > subsets(vector<int> &S) {
  	return subset;
  }
 
-vector<vector<int> > subsetsRec(vector<int> &S) {
+vector<int> mVec;
+vector< vector<int> > mRes;
 
+void op(const vector<int>& S, int idx){
+    if(idx >= S.size()){
+        mRes.push_back(mVec);
+        return;
+    }
+    op(S, idx + 1);
+    mVec.push_back(S[idx]);
+    op(S, idx + 1);
+    mVec.pop_back();
 }
 
+
+vector<vector<int> > subsets(vector<int> &S) {
+    sort(S.begin(), S.end());
+    op(S, 0);
+    return mRes;
+}
 
 
 

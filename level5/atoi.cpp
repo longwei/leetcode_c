@@ -10,37 +10,24 @@ using namespace std;
 
 class Solution {
 public:
-    int atoi(const char *str) {
-        //discard all while space
-        //optional +/-
-        //number looking out for overflow
-        if(str == NULL || *str == '\0') {
-            return 0;
-        }
-        int length = strlen(str);
-        int ret = 0;
-        for(;isspace(*str); str++);
-        bool neg = false;
-        if(*str == '-' || *str == '+'){
-            neg = (*str == '-');
-            str++;
-        }
-        for(; isdigit(*str); str++){
-            int digit = (*str - '0');
-            if(neg){
-                if (-ret < (INT_MIN + digit) / 10){
-                    return INT_MIN;
-                }
-            } else {
-                if(ret > (INT_MAX - digit) /10 ) {
-                    return INT_MAX;
-                }
-            }
-            ret = 10 * ret + digit;
-        }
-        return neg? -ret : ret;
-    }
+    int atoi(string str) {
+        int n = 0;
+        int sign = 0;
+        int i = 0;
 
+        while (isspace(str[i])) i++;
+        sign = (str[i] == '-' ? -1 : 1);
+        if (str[i] == '-' || str[i] == '+') i++;
+
+        for (; isdigit(str[i]); i++) {
+            int x = str[i] - '0';
+            if (n > (INT_MAX - x) / 10) {
+                return sign < 0 ? INT_MIN : INT_MAX;
+            }
+            n = n * 10 + x;
+        }
+        return n * sign;
+    }
 };
 
 

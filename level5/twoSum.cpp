@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <unordered_map>
 using namespace std;
 
 //Given an array of integers, find two numbers such that they add up to a specific target number.
@@ -15,19 +16,15 @@ using namespace std;
 class Solution {
 public:
     vector<int> twoSum(vector<int> &numbers, int target) {
-        map<int,int> m;
-        vector<int> result;
-        for(int i=0; i < numbers.size(); i++){
-            if(m.find(numbers[i]) == m.end()){
-                //not found in target - i hash
-                m[target - numbers[i]] = i;
-            } else {
-                //got a hit
-                result.push_back(m[numbers[i]] +1 );
-                result.push_back(i+1);
+        unordered_map<int, int> indexes; //[sum-number[i]], i
+        for(int i = 0; i < numbers.size(); ++i){
+            auto it = indexes.find(target - numbers[i]);
+            if( it != indexes.end()) {
+                return {it->second, i+1};
             }
+            indexes[numbers[i]] = i + 1;
         }
-        return result;
+        return vector<int>();
     }
 };
 

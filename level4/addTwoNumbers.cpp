@@ -9,8 +9,6 @@
 #include <unordered_set>
 using namespace std;
 
-
-
 struct ListNode {
    int val;
    ListNode *next;
@@ -30,8 +28,6 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
     ListNode* result = addTwoNumbersR(l1, l2,0);
     return result;
 }
-
-
 
 
 int main()

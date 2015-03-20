@@ -68,6 +68,7 @@ vector<vector<int> > subsets(vector<int> &S) {
  	return subset;
  }
 
+
 vector<int> mVec;
 vector< vector<int> > mRes;
 

@@ -22,6 +22,25 @@ struct ListNode {
   ListNode(int x) : val(x), next(NULL) {}
 };
 
+
+//pointer to next pointer, 
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+  ListNode* head = NULL;
+  ListNode** pNext = &head;
+  while (l1 != NULL && l2 != NULL) {
+    if (l1->val <= l2->val) {
+      *pNext = l1; //then update where the next pointer to.
+      l1 = l1->next;
+    } else {
+      *pNext = l2;
+      l2 = l2->next;
+    }
+    pNext = &((*pNext)->next);
+  }
+  *pNext = (l1 != NULL ? l1 : l2);
+  return head;
+}
+
 class Solution {
  public:
   ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {

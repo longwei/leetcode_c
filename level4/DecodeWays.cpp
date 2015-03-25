@@ -4,7 +4,8 @@
 #include <unordered_map>
 
 vector<int> dp;
-vector<bool> vis; //have a vis for a better performace
+vector<bool> vis;
+// unordered_map<int, int> dp; //have slighter poor performace
 bool inline consumeOne(string s, int cur) {
   // cur at least ptr to a int
   if (s[cur] == '0') return false;
@@ -50,16 +51,21 @@ int numDecodings(string s) {
   return numDecodingsRec(s, 0);
 }
 
-// int numDecodings(string s) {
-//   if (!s.size() || s[0] == '0') return 0;
-//   int cur_2 = 1, cur_1 = 1, cur = 0;
-
-//   for (int i = 2; i <= s.size(); i++) {
-//     if (s[i - 1] != '0') cur += cur_1;
-//     if (s[i - 2] == '1' || (s[i - 2] == '2' && s[i - 1] < '7')) cur += cur_2;
-//     cur_2 = cur_1;
-//     cur_1 = cur;
-//     cur = 0;
-//   }
-//   return cur_1;
-// }
+// o(1) space
+int numDecodings(string s) {
+  if (s.empty() || s[0] == '0') return 0;
+  // Fibonacci rocks!
+  int a = 1;
+  int b = 1;
+  for (int i = 1; i < s.length(); i++) {
+    int n = 0;
+    if (s[i] != '0') n += b;  // walk from the previous step
+    if (s[i - 1] == '1' || (s[i - 1] == '2' && s[i] <= '6')) {
+      n += a;  // jump from the step before the previous step
+    }
+    a = b;
+    b = n;
+    // if (a == 0 && b == 0) break;
+  }
+  return b;
+}
